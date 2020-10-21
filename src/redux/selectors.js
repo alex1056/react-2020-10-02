@@ -42,7 +42,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId]?.name,
+    user: users[review.userId] ?.name,
   })
 );
 
