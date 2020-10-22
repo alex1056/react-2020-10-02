@@ -9,3 +9,6 @@ export const LOAD_REVIEWS = 'LOAD_REVIEWS';
 export const REQUEST = '_REQUEST';
 export const SUCCESS = '_SUCCESS';
 export const FAILURE = '_FAILURE';
+
+
+export const LOAD_PRODUCTS = 'LOAD_PRODUCTS';

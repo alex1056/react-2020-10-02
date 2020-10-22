@@ -9,11 +9,11 @@ import { increment, decrement } from '../../redux/actions';
 import Button from '../button';
 import { productAmountSelector, productSelector } from '../../redux/selectors';
 
-const Product = ({ product, amount, increment, decrement, fetchData }) => {
-  useEffect(() => {
-    fetchData && fetchData(product.id);
-  }, []); // eslint-disable-line
-
+const Product = ({ product, amount, increment, decrement }) => {
+  // useEffect(() => {
+  //   fetchData && fetchData(product.id);
+  // }, []); // eslint-disable-line
+  // console.log('product', product);
   return (
     <div className={styles.product} data-id="product">
       <div className={styles.content}>
@@ -46,18 +46,18 @@ const Product = ({ product, amount, increment, decrement, fetchData }) => {
   );
 };
 
-Product.propTypes = {
-  product: PropTypes.shape({
-    ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-    name: PropTypes.string,
-    price: PropTypes.number,
-  }).isRequired,
-  fetchData: PropTypes.func,
-  // from HOC counter
-  amount: PropTypes.number,
-  decrement: PropTypes.func,
-  increment: PropTypes.func,
-};
+// Product.propTypes = {
+//   product: PropTypes.shape({
+//     ingredients: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+//     name: PropTypes.string,
+//     price: PropTypes.number,
+//   }).isRequired,
+//   fetchData: PropTypes.func,
+//   // from HOC counter
+//   amount: PropTypes.number,
+//   decrement: PropTypes.func,
+//   increment: PropTypes.func,
+// };
 
 const mapStateToProps = createStructuredSelector({
   amount: productAmountSelector,

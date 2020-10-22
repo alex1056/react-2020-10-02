@@ -2,7 +2,7 @@ import { FAILURE, REQUEST, SUCCESS } from '../constants';
 
 export default (store) => (next) => async (action) => {
   if (!action.CallAPI) return next(action);
-
+  console.log('action из api=', action);
   const { CallAPI, type, ...rest } = action;
 
   next({ ...rest, type: type + REQUEST });

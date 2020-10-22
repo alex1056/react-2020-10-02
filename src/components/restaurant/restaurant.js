@@ -8,9 +8,11 @@ import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
 
+
 const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
+
   const tabs = [
-    { title: 'Menu', content: <Menu menu={menu} /> },
+    { title: 'Menu', content: <Menu id={id} menu={menu} restaurantId={id} /> },
     {
       title: 'Reviews',
       content: <Reviews reviews={reviews} restaurantId={id} />,
@@ -34,6 +36,9 @@ Restaurant.propTypes = {
   reviews: PropTypes.array,
   averageRating: PropTypes.number,
 };
+
+
+
 
 export default connect((state, props) => ({
   averageRating: averageRatingSelector(state, props),
