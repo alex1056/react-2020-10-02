@@ -24,6 +24,12 @@ class Menu extends React.Component {
   // useEffect(() => {
   //   if (!loading && !loaded) loadRestaurants();
   // }, []); // eslint-disable-line
+  componentDidUpdate(prevProps) {
+    const { restaurantId, loadProducts } = this.props;
+    if (prevProps.restaurantId !== restaurantId) {
+      loadProducts(restaurantId);
+    }
+  }
 
   componentDidMount() {
     console.log('Смонтировали компонент, Новый id ресторана=', this.props.id);
@@ -96,24 +102,10 @@ class Menu extends React.Component {
 
 
 const mapStateToProps = (state, props) => ({
-  restaurantId: props.restaurantId,
   menu: productsListSelector(state),
-  // menu: state.products.entities,
   loading: productsLoadingSelector(state),
   loaded: productsLoadedSelector(state),
 });
-
-/*
-export default connect(
-  (state) => ({
-    restaurants: restaurantsListSelector(state),
-    loading: restaurantsLoadingSelector(state),
-    loaded: restaurantsLoadedSelector(state),
-  }),
-  { loadRestaurants }
-)(Restaurants);
-*/
-
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
   loadProducts: () => dispatch(loadProducts(ownProps.id))
