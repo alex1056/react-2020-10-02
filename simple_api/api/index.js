@@ -21,7 +21,7 @@ router.get('/products', (req, res, next) => {
 router.get('/reviews', (req, res, next) => {
   const { id } = req.query;
   let result = reviews;
-  console.log('id=', id);
+  // console.log('id=', id);
   if (id) {
     const restaurant = getById(restaurants)(id);
     if (restaurant) {

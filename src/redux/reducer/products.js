@@ -1,12 +1,7 @@
 // import { normalizedProducts } from '../../fixtures';
 import { arrToMap } from '../utils';
 
-import {
-  FAILURE,
-  LOAD_PRODUCTS,
-  REQUEST,
-  SUCCESS,
-} from '../constants';
+import { FAILURE, LOAD_PRODUCTS, REQUEST, SUCCESS } from '../constants';
 
 const initialState = {
   entities: {},
@@ -17,7 +12,7 @@ const initialState = {
 
 export default (state = initialState, action) => {
   const { type, payload, response, error } = action;
-  console.log('Из reducer products action=', action);
+  // console.log('Из reducer products action=', action);
 
   switch (type) {
     case LOAD_PRODUCTS + REQUEST:

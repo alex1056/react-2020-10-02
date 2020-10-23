@@ -11,9 +11,19 @@ export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 export const productsLoadingSelector = (state) => state.products.loading;
 export const productsLoadedSelector = (state) => state.products.loaded;
 
+export const reviewsLoadingSelector = (state) => state.reviews.loading;
+export const reviewsLoadedSelector = (state) => state.reviews.loaded;
+
+const reviewsSelector = (state) => state.reviews.entities;
+const usersSelector = (state) => state.users.entities;
+
 export const productsListSelector = createSelector(
   productsSelector,
   (products) => Object.values(products)
+);
+
+export const reviewsListSelector = createSelector(reviewsSelector, (reviews) =>
+  Object.values(reviews)
 );
 
 export const orderProductsSelector = createSelector(
@@ -36,9 +46,6 @@ export const totalSelector = createSelector(
   (orderProducts) =>
     orderProducts.reduce((acc, { subtotal }) => acc + subtotal, 0)
 );
-
-const reviewsSelector = (state) => state.reviews;
-const usersSelector = (state) => state.users;
 
 export const restaurantsListSelector = createSelector(
   restaurantsSelector,

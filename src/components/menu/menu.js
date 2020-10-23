@@ -32,9 +32,9 @@ class Menu extends React.Component {
   }
 
   componentDidMount() {
-    console.log('Смонтировали компонент, Новый id ресторана=', this.props.id);
+    // console.log('Смонтировали компонент, Новый id ресторана=', this.props.id);
     // console.log('restaurantId=', this.props.restaurantId);
-    this.props.loadProducts(this.props.id)
+    this.props.loadProducts(this.props.id);
   }
 
   componentDidCatch(error) {
@@ -53,15 +53,13 @@ class Menu extends React.Component {
   }
 */
 
-
   render() {
     // console.log('menu-render, props=', this.props);
 
     // if (!this.props.loading && !this.props.loaded) this.props.loadProducts(this.props.id);
-    console.log('restaurantId=', this.props.restaurantId);
+    // console.log('restaurantId=', this.props.restaurantId);
 
     if (this.props.loading || !this.props.loaded) return <Loader />;
-
 
     const { menu } = this.props;
 
@@ -86,8 +84,6 @@ class Menu extends React.Component {
   }
 }
 
-
-
 // binds on component re-rendering
 //{/* <button onClick={() => this.props.toggleTodo(this.props.todoId)} /> */}
 
@@ -100,7 +96,6 @@ class Menu extends React.Component {
 //   todo: state.todos[ownProps.id]
 // })
 
-
 const mapStateToProps = (state, props) => ({
   menu: productsListSelector(state),
   loading: productsLoadingSelector(state),
@@ -108,10 +103,9 @@ const mapStateToProps = (state, props) => ({
 });
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
-  loadProducts: () => dispatch(loadProducts(ownProps.id))
-})
+  loadProducts: () => dispatch(loadProducts(ownProps.id)),
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Menu);
-
 
 // export default Menu;

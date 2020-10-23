@@ -6,6 +6,7 @@ import {
   LOAD_RESTAURANTS,
   LOAD_PRODUCTS,
   LOAD_REVIEWS,
+  LOAD_USERS,
   REQUEST,
   SUCCESS,
   FAILURE,
@@ -31,9 +32,14 @@ export const loadProducts = (restaurantId) => ({
   CallAPI: `/api/products?id=${restaurantId}`,
 });
 
+export const loadUsers = () => ({
+  type: LOAD_USERS,
+  CallAPI: '/api/users',
+});
 
 export const loadReviews = (restaurantId) => async (dispatch) => {
   dispatch({ type: LOAD_REVIEWS + REQUEST });
+  // console.log('из LoadReviews restaurantId=', restaurantId);
 
   try {
     const response = await fetch(

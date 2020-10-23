@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Restaurant from '../restaurant';
@@ -13,6 +14,8 @@ import { loadRestaurants } from '../../redux/actions';
 import { useEffect } from 'react';
 
 const Restaurants = ({ restaurants, loadRestaurants, loading, loaded }) => {
+  const [restaurantIdState, setRestaurantId] = useState(null);
+
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
   }, []); // eslint-disable-line
@@ -21,7 +24,13 @@ const Restaurants = ({ restaurants, loadRestaurants, loading, loaded }) => {
 
   const tabs = restaurants.map((restaurant) => ({
     title: restaurant.name,
-    content: <Restaurant {...restaurant} />,
+    content: (
+      <Restaurant
+        {...restaurant}
+        restaurantIdState={restaurantIdState}
+        setRestaurantId={setRestaurantId}
+      />
+    ),
   }));
 
   return <Tabs tabs={tabs} />;
