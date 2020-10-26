@@ -7,9 +7,24 @@ import styles from './basket.module.css';
 import BasketRow from './basket-row';
 import BasketItem from './basket-item';
 import Button from '../button';
-import { orderProductsSelector, totalSelector } from '../../redux/selectors';
+import {
+  // orderProductsSelector,
+  totalSelector,
+  // mapProductsToRestaurantsSelector,
+  productsRestaurantsSelector,
+} from '../../redux/selectors';
 
-function Basket({ title = 'Basket', total, orderProducts }) {
+function Basket({
+  title = 'Basket',
+  total,
+  orderProducts,
+  // orderProductsWithId,
+  // productsRestaurantsSelector,
+}) {
+  // console.log('orderProducts=', orderProducts);
+  // console.log('orderProductsWithId=', orderProductsWithId);
+  // console.log('productsRestaurantsSelector=', productsRestaurantsSelector);
+
   if (!total) {
     return (
       <div className={styles.basket}>
@@ -22,12 +37,14 @@ function Basket({ title = 'Basket', total, orderProducts }) {
     <div className={styles.basket}>
       <h4 className={styles.title}>{title}</h4>
       {orderProducts.map(({ product, amount, subtotal }) => (
-        <BasketItem
-          product={product}
-          amount={amount}
-          key={product.id}
-          subtotal={subtotal}
-        />
+        <Link key={product.id} to={`/restaurants/${product.restaurantId}`}>
+          <BasketItem
+            product={product}
+            amount={amount}
+            key={product.id}
+            subtotal={subtotal}
+          />
+        </Link>
       ))}
       <hr className={styles.hr} />
       <BasketRow label="Sub-total" content={`${total} $`} />
@@ -44,7 +61,10 @@ function Basket({ title = 'Basket', total, orderProducts }) {
 
 const mapStateToProps = createStructuredSelector({
   total: totalSelector,
-  orderProducts: orderProductsSelector,
+  // orderProducts: orderProductsSelector,
+  // orderProductsWithId: mapProductsToRestaurantsSelector,
+  // productsRestaurantsSelector: productsRestaurantsSelector,
+  orderProducts: productsRestaurantsSelector,
 });
 
 export default connect(mapStateToProps)(Basket);

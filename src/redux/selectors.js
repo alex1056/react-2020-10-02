@@ -39,6 +39,60 @@ export const orderProductsSelector = createSelector(
   }
 );
 
+export const mapProductsToRestaurantsSelector = createSelector(
+  orderSelector,
+  restaurantsSelector,
+  (products, restaurants) => {
+    const restArr = Object.keys(restaurants).map(
+      (restaurntId) => restaurants[restaurntId]
+    );
+
+    const mapProductsToRestaurant = Object.keys(products).map((productId) => {
+      return restArr.reduce((acc, item) => {
+        if (item.menu.includes(productId)) {
+          if (acc === undefined) {
+            acc = { [productId]: item.id };
+            return acc;
+          } else {
+            acc = { ...acc, [productId]: item.id };
+            return acc;
+          }
+        }
+        return acc;
+      }, {});
+    });
+
+    return mapProductsToRestaurant.reduce((acc, item) => {
+      if (acc === undefined) {
+        acc = { item };
+        return acc;
+      } else {
+        acc = { ...acc, ...item };
+        return acc;
+      }
+    }, {});
+    // return {
+    //   // products,
+    //   // restArr,
+    //   mapProductsToRestaurant,
+    // };
+  }
+);
+
+export const productsRestaurantsSelector = createSelector(
+  orderProductsSelector,
+  mapProductsToRestaurantsSelector,
+  (products, restaurants) =>
+    products.map(({ product, amount, subtotal }) => {
+      product = { ...product, restaurantId: restaurants[product.id] };
+      return {
+        product,
+        amount,
+        subtotal,
+      };
+    })
+);
+
 export const totalSelector = createSelector(
   orderProductsSelector,
   (orderProducts) =>
@@ -58,7 +112,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId] ?.name,
+    user: users[review.userId]?.name,
   })
 );
 
