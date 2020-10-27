@@ -3,7 +3,7 @@ import { getById } from './utils';
 
 const restaurantsSelector = (state) => state.restaurants.entities;
 const productsSelector = (state) => state.products.entities;
-const reviewsSelector = (state) => state.reviews.entities;
+export const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
 const orderSelector = (state) => state.order;
@@ -11,15 +11,27 @@ const orderSelector = (state) => state.order;
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
 export const restaurantsLoadedSelector = (state) => state.restaurants.loaded;
 
-export const productsLoadingSelector = (state, props) =>
-  state.products.loading[props.restaurantId];
-export const productsLoadedSelector = (state, props) =>
-  state.products.loaded[props.restaurantId];
+export const productsLoadingSelector = (state, props) => {
+  // state.products.loading[props.restaurantId];
+  return state.products.loading[props.match.params.restId];
+};
+
+export const productsLoadedSelector = (state, props) => {
+  // state.products.loaded[props.restaurantId];
+  return state.products.loaded[props.match.params.restId];
+};
 
 export const reviewsLoadingSelector = (state, props) =>
   state.reviews.loading[props.restaurantId];
-export const reviewsLoadedSelector = (state, props) =>
-  state.reviews.loaded[props.restaurantId];
+export const reviewsLoadedSelector = (state, props) => {
+  try {
+    if (props.match.params.restId) {
+      return state.reviews.loaded[props.match.params.restId];
+    }
+  } catch (error) {
+    return state.reviews.loaded[props.restaurantId];
+  }
+};
 
 export const usersLoadingSelector = (state) => state.users.loading;
 export const usersLoadedSelector = (state) => state.users.loaded;
@@ -71,11 +83,6 @@ export const mapProductsToRestaurantsSelector = createSelector(
         return acc;
       }
     }, {});
-    // return {
-    //   // products,
-    //   // restArr,
-    //   mapProductsToRestaurant,
-    // };
   }
 );
 
@@ -124,5 +131,44 @@ export const averageRatingSelector = createSelector(
     return Math.round(
       ratings.reduce((acc, rating) => acc + rating) / ratings.length
     );
+  }
+);
+
+export const menuSelector = createSelector(
+  restaurantsListSelector,
+  (_, props) => {
+    const restId = props.match.params.restId;
+    return restId;
+  },
+  (restaurants, restId) =>
+    restaurants.find((restaurant) => restaurant.id === restId).menu
+);
+
+export const restaurantReviewsSelector = createSelector(
+  restaurantsListSelector,
+  reviewsSelector,
+  (_, props) => {
+    const restId = props.match.params.restId;
+    return restId;
+  },
+
+  (restaurants, reviews, restId) => {
+    const restaurantReviews = restaurants.find(
+      (restaurant) => restaurant.id === restId
+    ).reviews;
+
+    // const restaurantReviews = restaurants[restId].reviews;
+    const revIdArr = Object.keys(reviews).filter((review) =>
+      restaurantReviews.includes(review)
+    );
+
+    return revIdArr.reduce((acc, item) => {
+      if (!acc) {
+        return (acc = { [item]: reviews[item] });
+      } else {
+        acc = { ...acc, [item]: reviews[item] };
+        return acc;
+      }
+    }, {});
   }
 );

@@ -10,43 +10,53 @@ import { connect } from 'react-redux';
 import {
   reviewsLoadedSelector,
   usersLoadedSelector,
+  reviewsSelector,
+  restaurantReviewsSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
 
-const Reviews = ({
-  reviews,
-  restaurantId,
-  loadReviews,
-  loadUsers,
-  usersLoaded,
-  reviewsLoaded,
-}) => {
+const Reviews = (props) => {
+  const {
+    reviews,
+    restaurantId,
+    loadReviews,
+    loadUsers,
+    usersLoaded,
+    reviewsLoaded,
+    match,
+  } = props;
+  // console.log('props from begining of comp reviews=', props);
+  const { restId } = match.params;
   useEffect(() => {
     loadUsers();
-    loadReviews(restaurantId);
-  }, [restaurantId]); // eslint-disable-line
+    loadReviews(restId);
+    // console.log('props from useEffect=', props);
+  }, [restId]); // eslint-disable-line
 
   if (!usersLoaded || !reviewsLoaded) return <Loader />;
-
+  // console.log('reviews=', reviews);
   return (
     <div className={styles.reviews}>
-      {reviews.map((id) => (
+      {Object.keys(reviews).map((id) => (
         <Review key={id} id={id} />
       ))}
-      <ReviewForm restaurantId={restaurantId} />
+      <ReviewForm restaurantId={restId} />
     </div>
   );
 };
 
-Reviews.propTypes = {
-  restaurantId: PropTypes.string.isRequired,
-  reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
-};
+// Reviews.propTypes = {
+//   restaurantId: PropTypes.string.isRequired,
+//   reviews: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,
+// };
 
 const mapStateToProps = createStructuredSelector({
   reviewsLoaded: reviewsLoadedSelector,
   usersLoaded: usersLoadedSelector,
+  // reviews: reviewsSelector,
+  reviews: restaurantReviewsSelector,
+  // rev1: restaurantReviewsSelector,
 });
 
 export default connect(mapStateToProps, { loadReviews, loadUsers })(Reviews);

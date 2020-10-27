@@ -7,6 +7,8 @@ import { loadProducts } from '../../redux/actions';
 import {
   productsLoadingSelector,
   productsLoadedSelector,
+  restaurantsListSelector,
+  menuSelector,
 } from '../../redux/selectors';
 
 import Loader from '../loader';
@@ -23,9 +25,11 @@ class Menu extends React.Component {
   state = { error: null };
 
   loadProductsIfNeeded = () => {
-    const { loadProducts, restaurantId, loading, loaded } = this.props;
+    // const { loadProducts, restaurantId, loading, loaded, match } = this.props;
+    const { loadProducts, loading, loaded, match, menu } = this.props;
+    const { restId } = match.params;
     if (!loading && !loaded) {
-      loadProducts(restaurantId);
+      loadProducts(restId);
     }
   };
 
@@ -34,8 +38,11 @@ class Menu extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevProps.restaurantId !== this.props.restaurantId) {
+    // if (prevProps.restaurantId !== this.props.restaurantId) {
+    if (prevProps.match.params.restId !== this.props.match.params.restId) {
       this.loadProductsIfNeeded();
+      const { menu, loading, match } = this.props;
+      // console.log('Из componentDidUpdate menu=', menu);
     }
   }
 
@@ -44,8 +51,12 @@ class Menu extends React.Component {
   }
 
   render() {
-    const { menu, loading } = this.props;
-
+    const { menu, loading, loaded, match } = this.props;
+    // console.log(this.props);
+    // console.log('menu=', menu);
+    // console.log('this.props=', this.props);
+    // console.log('loading=, loaded,=', loading, loaded);
+    // console.log(match.params.restId);
     if (loading) {
       return <Loader />;
     }
@@ -73,6 +84,8 @@ export default connect(
   createStructuredSelector({
     loading: productsLoadingSelector,
     loaded: productsLoadedSelector,
+    restaurants: restaurantsListSelector,
+    menu: menuSelector,
   }),
   { loadProducts }
 )(Menu);
