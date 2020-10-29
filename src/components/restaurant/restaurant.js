@@ -11,7 +11,17 @@ import Tabs from '../tabs';
 import { connect } from 'react-redux';
 import { averageRatingSelector } from '../../redux/selectors';
 
-const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
+const Restaurant = (props) => {
+  const {
+    id,
+    name,
+    menu,
+    reviews,
+    averageRating,
+    setActiveTab,
+    activeTab,
+  } = props;
+
   const tabs = [
     { title: 'Menu', to: `/restaurants/${id}/menu` },
     { title: 'Reviews', to: `/restaurants/${id}/reviews` },
@@ -31,11 +41,6 @@ const Restaurant = ({ id, name, menu, reviews, averageRating }) => {
         <Route
           path="/restaurants/:restId/reviews"
           render={() => <Reviews reviews={reviews} restaurantId={id} />}
-        />
-        <Redirect
-          exact
-          from="/restaurants/:restId"
-          to={`/restaurants/${id}/menu`}
         />
       </Switch>
     </div>
