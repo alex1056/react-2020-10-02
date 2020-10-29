@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import Restaurants from '../components/restaurants';
 import Loader from '../components/loader';
 import {
@@ -17,6 +17,7 @@ function RestaurantsPage({
   loading,
   loaded,
   match,
+  history,
 }) {
   useEffect(() => {
     if (!loading && !loaded) loadRestaurants();
@@ -26,14 +27,10 @@ function RestaurantsPage({
 
   if (match.isExact) {
     return (
-      <div>
-        <h1>Select restaurant:</h1>
-        {restaurants.map(({ id, name }) => (
-          <Link key={id} to={`/restaurants/${id}`}>
-            <p>{name}</p>
-          </Link>
-        ))}
-      </div>
+      <>
+        <Restaurants match={match} history={history} />
+        <h2 style={{ textAlign: 'center' }}>Select restaurant</h2>
+      </>
     );
   }
 
