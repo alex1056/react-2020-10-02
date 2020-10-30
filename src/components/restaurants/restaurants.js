@@ -11,7 +11,7 @@ import { restaurantsListSelector } from '../../redux/selectors';
 const Restaurants = (props) => {
   const { restaurants, match } = props;
 
-  console.log('props from Restaurants=', props);
+  // console.log('props from Restaurants=', props);
   let tabId = 'menu';
 
   if (props.match.path.includes('menu')) {

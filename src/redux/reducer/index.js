@@ -7,6 +7,7 @@ import products from './products';
 import reviews from './reviews';
 import users from './users';
 import history from '../../history';
+import makeOrder from './make-order';
 
 const reducer = combineReducers({
   router: connectRouter(history),
@@ -15,6 +16,7 @@ const reducer = combineReducers({
   products,
   reviews,
   users,
+  makeOrder,
 });
 
 export default reducer;

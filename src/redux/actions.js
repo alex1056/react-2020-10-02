@@ -11,6 +11,7 @@ import {
   REQUEST,
   SUCCESS,
   FAILURE,
+  MAKE_ORDER,
 } from './constants';
 import {
   usersLoadingSelector,
@@ -67,3 +68,20 @@ export const loadUsers = () => async (dispatch, getState) => {
 
   dispatch({ type: LOAD_USERS, CallAPI: '/api/users' });
 };
+
+export const makeOrder = (orderArr) => {
+  const obj = {
+    type: MAKE_ORDER,
+    CallAPI: '/api/order',
+    options: {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(orderArr),
+    },
+  };
+  return obj;
+};
+
+export const removeOrderStatus = () => ({
+  type: MAKE_ORDER + REMOVE,
+});

@@ -3,6 +3,7 @@ import { Redirect, Route, Switch } from 'react-router-dom';
 import Header from '../header';
 import Basket from '../basket';
 import RestaurantsPage from '../../pages/restaurants-page';
+import ThankOrder from '../thank-order';
 import { UserProvider } from '../../context/user-context';
 
 export default () => {
@@ -17,6 +18,7 @@ export default () => {
           <Route path="/error" component={() => <h1>Error Page</h1>} />
           {/* <Route path="/" component={() => '404 - not found'} /> */}
           <Redirect exact from="/" to={`/restaurants`} />
+          <Route exact path="/thanks-for-order" component={ThankOrder} />
         </Switch>
       </UserProvider>
     </div>

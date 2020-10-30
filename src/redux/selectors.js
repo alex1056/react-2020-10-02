@@ -6,6 +6,13 @@ const productsSelector = (state) => state.products.entities;
 const reviewsSelector = (state) => state.reviews.entities;
 const usersSelector = (state) => state.users.entities;
 
+const makeOrderSelector = (state) => state.makeOrder.entities;
+export const makeOrderSelectorLoadingSelector = (state) =>
+  state.makeOrder.loading;
+export const makeOrderSelectorLoadedSelector = (state) =>
+  state.makeOrder.loaded;
+export const makeOrderResponseSelector = (state) => state.makeOrder.entities;
+
 const orderSelector = (state) => state.order;
 
 export const restaurantsLoadingSelector = (state) => state.restaurants.loading;
@@ -74,7 +81,7 @@ export const reviewWitUserSelector = createSelector(
   usersSelector,
   (review, users) => ({
     ...review,
-    user: users[review.userId] ?.name,
+    user: users[review.userId]?.name,
   })
 );
 

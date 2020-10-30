@@ -13,7 +13,7 @@ import { createStructuredSelector } from 'reselect';
 
 function RestaurantsPage(props) {
   const {
-    restaurants,
+    // restaurants,
     loadRestaurants,
     loading,
     loaded,
@@ -29,7 +29,6 @@ function RestaurantsPage(props) {
   if (loading || !loaded) return <Loader />;
 
   if (match.isExact) {
-    // console.log('Restaurants page дает точное соотвествие!');
     //если точное соответствие урла
     return (
       <>

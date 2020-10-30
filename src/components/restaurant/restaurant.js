@@ -18,8 +18,8 @@ const Restaurant = (props) => {
     menu,
     reviews,
     averageRating,
-    setActiveTab,
-    activeTab,
+    // setActiveTab,
+    // activeTab,
   } = props;
 
   const tabs = [
