@@ -32,7 +32,7 @@ function Basket({
   removeOrderStatus,
 }) {
   // console.log('makeOrder', makeOrder);
-  console.log('loading, loaded, response =', loading, loaded, response);
+  // console.log('loading, loaded, response =', loading, loaded, response);
   // console.log('orderProducts =', orderProducts);
   // console.log('render Basket');
   // const { name } = useContext(userContext);
@@ -47,7 +47,7 @@ function Basket({
   let active;
   if (loading) active = { disabled: true };
   else active = {};
-  console.log('active=', active);
+  // console.log('active=', active);
 
   if (response === 'ok') {
     // console.log('Заказ принят!');
